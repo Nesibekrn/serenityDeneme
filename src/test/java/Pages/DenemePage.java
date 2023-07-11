@@ -23,5 +23,12 @@ public class DenemePage extends PageObject {
     public WebElementFacade productNumberText;
     @FindBy(xpath = "//span[@class='button button--secondary']")
     public List<WebElementFacade> productListItem;
-
+    @FindBy(xpath = "//*[@data-cx-focus='Schweiß-, Schneid-, Lasergase']")
+    public WebElementFacade schweissCheckbox;
+    @FindBy(xpath = "//*[@data-cx-focus='Industriegase']")
+    public WebElementFacade industriegaseCheckbox;
+    @FindBy(xpath = "//cx-active-facets//span[.='Schweiß-, Schneid-, Lasergase']")
+    public WebElementFacade schweissTextFilter;
+    @FindBy(xpath = "//cx-active-facets//span[.='Industriegase']")
+    public WebElementFacade industriegaseTextFilter;
 }

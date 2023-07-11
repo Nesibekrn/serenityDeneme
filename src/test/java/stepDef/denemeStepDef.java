@@ -8,10 +8,12 @@ import io.cucumber.java.en.When;
 
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.pages.PageObject;
+import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import net.serenitybdd.core.environment.EnvironmentSpecificConfiguration;
 
@@ -32,9 +34,6 @@ public class denemeStepDef {
 
     @When("he clicks Productsortiment")
     public void heClicksProductsortiment() {
-//        denemePage.waitForVisibilityOfCookieAlert();
-
-//        denemePage.waitForVisibilityOfProductOrtiment();
         denemePage.productOrtimentLink.waitUntilVisible();
         denemePage.productOrtimentLink.click();
     }
@@ -47,21 +46,45 @@ public class denemeStepDef {
     @And("he verifies all products are visible")
     public void heVerifiesAllProductsAreVisible() {
         denemePage.productNumberText.waitUntilVisible();
-        String text=denemePage.productNumberText.getText().split(" ")[0].substring(1);
+        String text = denemePage.productNumberText.getText().split(" ")[0].substring(1);
         System.out.println("text = " + text);
-        int productCount=denemePage.productListItem.size();
+        int productCount = denemePage.productListItem.size();
         System.out.println("productCount = " + productCount);
-        Assert.assertEquals(productCount,Integer.parseInt(text));
+        Assert.assertEquals(productCount, Integer.parseInt(text));
     }
 
     @When("he accepts the cookie")
     public void heAcceptsTheCookie() {
-//        boolean insecureConnection = connectionMessageContentWrapper.isDisplayed();
-//    if(insecureConnection == true) {
-//        detailsButton.click();
-//        proceedLink.click();
-//        connectionMessageContentWrapper.waitUntilNotVisible();
         denemePage.acceptCookie.click();
         denemePage.productOrtimentLink.waitUntilVisible();
+    }
+
+    @And("he clicks {string} checkbox")
+    public void heClicksSchweißSchneidLasergaseCheckbox(String checkboxText) throws InterruptedException {
+        switch (checkboxText) {
+            case "Schweiß-, Schneid-, Lasergase":
+                if (!denemePage.schweissCheckbox.isSelected()) {
+                    denemePage.schweissCheckbox.click();
+                }
+                break;
+            case "Industriegase":
+                if (!denemePage.industriegaseCheckbox.isSelected()) {
+                    denemePage.industriegaseCheckbox.click();
+                }
+                break;
+        }
+    }
+
+    @And("he verifies {string} is visible under Angewendete Filter")
+    public void heVerifiesTheOptionIsVisibleUnderAngewendeteFilter(String optionText) {
+        switch (optionText) {
+            case "Schweiß-, Schneid-, Lasergase":
+                Assert.assertTrue(denemePage.schweissTextFilter.isDisplayed());
+                break;
+            case "Industriegase":
+                Assert.assertTrue(denemePage.industriegaseTextFilter.isDisplayed());
+                break;
+        }
+
     }
 }
