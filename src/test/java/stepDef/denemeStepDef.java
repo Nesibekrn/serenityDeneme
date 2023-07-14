@@ -17,6 +17,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import net.serenitybdd.core.environment.EnvironmentSpecificConfiguration;
 
+import java.util.Collection;
+import java.util.Collections;
+
 
 public class denemeStepDef {
     @Managed
