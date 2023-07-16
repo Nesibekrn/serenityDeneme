@@ -4,10 +4,10 @@ Feature: UI - Verify the Homepage
   @smoke
   @firstTC
   Scenario: Check homepage for elements
-    Given Hans goes to url
-    When he accepts the cookie
-    When he clicks Productsortiment
-    Then he clicks Schweiß-, Schneid-, Lasergase section
-    And he verifies all products are visible
-    And he clicks "Schweiß-, Schneid-, Lasergase" checkbox
-    And he verifies "Schweiß-, Schneid-, Lasergase" is visible under Angewendete Filter
+    Given I go to homepage
+    When I accept the cookie
+    When I click Produktsortiment
+    Then I click Schweiß-, Schneid-, Lasergase section
+    And I verify all products are visible
+    And I click "Schweiß-, Schneid-, Lasergase" checkbox
+    And I verify "Schweiß-, Schneid-, Lasergase" is visible under Angewendete Filter

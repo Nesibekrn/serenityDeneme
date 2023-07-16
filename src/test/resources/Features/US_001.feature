@@ -1,56 +1,49 @@
 Feature: US001
 
   Background:
-    Given user goes to homepage
-    When he accepts the cookie
+    Given I go to homepage
+    When I accept the cookie
 
   @smoke @US001_TC01 @UI
   Scenario: TC01
-    Then user verifies that "https://shop-dev.v2.westfalen.com/de/de/" url is visible
-    And he verifies all products are visible
+    Then I verify that "https://shop.westfalen.com/de/de/login" url is visible
+    And I click Produktsortiment
+    Then I click any section
+    And I verify all products are visible
     Then I verify titles are visible
-      | Kategorien            |
-      | Volumen               |
-      | Inhalt                |
-      | Anwendungen           |
-      | Fülldruck             |
-      | Flaschentyp           |
-      | Reinheit              |
-      | Bestandteile          |
-      | Flascheneigenschaften |
+      | Kategorien | Volumen | Inhalt | Anwendungen | Fülldruck | Flaschentyp | Reinheit | Bestandteile | Flascheneigenschaften | Bereiche | Eigenschaften |
     And I verify Dropdown is visible at the top of the page
     And I verify Dropdown is visible at the bottom of the page
-    And I verifiy Grid Icon is visible at the top of the page
-    And I verifiy Grid Icon is visible at the bottom of the page
-
+    And I verify Grid Icon is visible at the top of the page
+    And I verify Grid Icon is visible at the bottom of the page
 
 
   @smoke @US001_TC02 @UI
   Scenario: TC02 Sortierung über Dropdown Liste
-    When he clicks Productsortiment
-    Then he clicks any section
-    And he verifies all products are visible
-    When he selects Name Aufsteigend from Dropdown
-    Then he verifies all products are sorted aufsteigned
-    When he selects Name Absteigend from Dropdown
-    Then he verifies all products are sorted absteigend
-    When he selects Relevanz from Dropdown
-    Then he verifies all products are sorted relevanz
+    When I click Produktsortiment
+    Then I click any section
+    And I verify all products are visible
+    When I select Name Aufsteigend from Dropdown
+    Then I verify all products are sorted aufsteigned
+    When I select Name Absteigend from Dropdown
+    Then I verify all products are sorted absteigend
+    When I select Relevanz from Dropdown
+    Then I verify all products are sorted relevanz
 
   @smoke @US001_TC03 @UI
-  Scenario: TC03 Sortierung über Dropdown Liste
-    When he clicks Productsortiment
-    Then he clicks any section
-    And he verifies all products are visible
-    And he verifies Grid Icon is visible
-    And he clicks Grid Icon
-    And he verifies all products are visible
-    And he verifies List Icon is visible
+  Scenario: TC03 Wechseln der Ansicht zwischen Grid und Liste
+    When I click Produktsortiment
+    Then I click any section
+    And I verify all products are visible
+    And I verify Grid Icon is visible
+    And I click Grid Icon
+    And I verify all products are visible
+    And I verify List Icon is visible
 
   @smoke @US001_TC04 @UI
-  Scenario: TC04 Sortierung über Dropdown Liste
-    When he clicks Productsortiment
-    Then he clicks any section
-    And he verifies all products are visible
-    And he selects 3 checkboxes for filtering
-    And he verifies all products are visible
+  Scenario: TC04 Filterung mit mindestens 3 ausgewählten Filtern
+    When I click Produktsortiment
+    Then I click any section
+    And I verify all products are visible
+    And I select 3 checkboxes for filtering
+    And I verify all products are visible

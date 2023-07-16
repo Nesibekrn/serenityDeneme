@@ -1,11 +1,11 @@
 Feature: US002
 
   Background:
-    Given user goes to homepage
-    When he accepts the cookie
+    Given I go to homepage
+    When I accept the cookie
 
   @smoke @US002_TC01 @UI
-  Scenario: TC01
+  Scenario: TC01 Suche nach Artikelnummer
     When I click ProduktSuche icon
     Then I verify SearchBox is visible
     When I enter "A0042010252" as artikel nummer into searchbox
