@@ -10,7 +10,9 @@ import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -60,100 +62,14 @@ public class US_001StepDef {
 
     @Then("I verify titles are visible")
     public void ıVerifyTitlesAreVisible(DataTable dataTable) {
-//        List<String> titles=dataTable.column(0);
-        List<String> titles = dataTable.row(0);
-
-        // DataTable verilerini kullanarak işlemler yapabilirsiniz
-        System.out.println("titles1 = " + titles);
-        String categoryName = produktPage.produktCategoryName.getText().split("\\(")[0];
-        System.out.println("categoryName = " + categoryName);
-        if (categoryName.equals("Schweiß-, Schneid-, Lasergase ")) {
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Industriegase ")) {
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Brenngas ")){
-            titles.remove("Kategorien");
-            titles.remove("Volumen");
-            titles.remove("Anwendungen");
-            titles.remove("Flascheneigenschaften");
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        } else if (categoryName.equals("Treibgas ")){
-            titles.remove("Kategorien");
-            titles.remove("Volumen");
-            titles.remove("Inhalt");
-            titles.remove("Anwendungen");
-            titles.remove("Flaschentyp");
-            titles.remove("Reinheit");
-            titles.remove("Bestandteile");
-            titles.remove("Flascheneigenschaften");
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Kältemittel ")){
-            titles.remove("Kategorien");
-        }else if (categoryName.equals("R-Ware ")||categoryName.equals("Anlagenflaschen ")){
-            titles.remove("Kategorien");
-            titles.remove("Inhalt");
-            titles.remove("Anwendungen");
-            titles.remove("Fülldruck");
-            titles.remove("Flaschentyp");
-            titles.remove("Reinheit");
-            titles.remove("Bestandteile");
-            titles.remove("Flascheneigenschaften");
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Wärmeträger ")) {
-            titles.remove("Kategorien");
-            titles.remove("Anwendungen");
-            titles.remove("Fülldruck");
-            titles.remove("Reinheit");
-            titles.remove("Flascheneigenschaften");
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Medizinische Gase ")) {
-            titles.remove("Kategorien");
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Inhalationsgase ")) {
-            titles.remove("Flaschentyp");
-            titles.remove("Flascheneigenschaften");
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Kalibriergase ")) {
-            titles.remove("Anwendungen");
-            titles.remove("Reinheit");
-            titles.remove("Flascheneigenschaften");
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Tauchgase ")) {
-            titles.remove("Kategorien");
-            titles.remove("Volumen");
-            titles.remove("Anwendungen");
-            titles.remove("Fülldruck");
-            titles.remove("Flaschentyp");
-            titles.remove("Bestandteile");
-            titles.remove("Flascheneigenschaften");
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Lebensmittelgase ")||categoryName.equals("Pharmagase ")) {
-            titles.remove("Kategorien");
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }else if (categoryName.equals("Spezialgase ")) {
-            titles.remove("Bereiche");
-            titles.remove("Eigenschaften");
-        }
+        List<String> titles = dataTable.column(0);
         System.out.println("titles = " + titles);
-        if (!categoryName.equals("Ballongas ")||!categoryName.equals("Gase zur Reifebeschleunigung ")){
             List<String> elementTitles=new ArrayList<>();
             for (int i = 0; i <produktPage.categoryTitleList.size() ; i++) {
                 elementTitles.add(produktPage.categoryTitleList.get(i).getText());
             }
             for (String title:titles) {
                 Assert.assertTrue(elementTitles.contains(title));
-            }
         }
 
     }
@@ -174,14 +90,6 @@ public class US_001StepDef {
     public void ıVerifyGridIconIsVisibleAtTheBottomOfThePage() {
     }
 
-    @Then("I click any section")
-    public void ıClickAnySection() {
-        int listOfProdukt=homePage.productOrtimentAllLink.size();
-        Random random=new Random();
-        int ind=random.nextInt(listOfProdukt);
-        homePage.productOrtimentAllLink.get(0).click();
-
-    }
 
     @When("I select Name Aufsteigend from Dropdown")
     public void ıSelectNameAufsteigendFromDropdown() {
@@ -219,7 +127,24 @@ public class US_001StepDef {
     public void ıVerifyListIconIsVisible() {
     }
 
-    @And("I select {int} checkboxes for filtering")
-    public void ıSelectCheckboxesForFiltering(int arg0) {
+    @And("I select checkboxes for filtering")
+    public void ıSelectCheckboxesForFiltering(DataTable dataTable) throws InterruptedException {
+        List<String>texts=dataTable.column(0);
+        for (String text:texts) {
+            System.out.println("text = " + text);
+            if (text.equals("stationärer/mobiler Vorrat")){
+                produktPage.scrollToElement(produktPage.flaschentypButton);
+
+               produktPage.flaschentypButton.waitUntilVisible();
+                produktPage.flaschentypButton.click();
+
+            }
+            WebElement checkbox=driver.findElement(By.xpath("//a[@data-cx-focus='"+text+"']"));
+
+            produktPage.scrollToElement(checkbox);
+
+            checkbox.click();
+
+        }
     }
 }
